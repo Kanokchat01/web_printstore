@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipt</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            text-align: center;
+        }
+        img {
+            margin: 20px 0;
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <% if (receiptPath) { %>
+        <h2>ใบเสร็จรับเงิน</h2>
+        <img src="<%= receiptPath.replace(/\\/g, '/') %>" alt="Receipt">
+    <% } else { %>
+        <p>No receipt available.</p>
+    <% } %>
+
+    <!-- Button to go back to the index page -->
+    <a href="/">
+        <button>กลับไปยังหน้าแรก</button>
+    </a>
+</div>
+
+</body>
+</html>

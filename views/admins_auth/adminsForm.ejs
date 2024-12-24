@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+    /* Custom styles */
+    body {
+      background-color: #fdf1e7; /* สีพื้นหลังให้ใกล้เคียงกับโทนสีส้มอ่อน */
+      font-family: Arial, sans-serif;
+    }
+    .navbar {
+      background-color: #ffdab9; /* สีส้มอ่อนให้เข้ากับธีม */
+      color: #000;
+      padding: 20px;
+    }
+    .navbar a {
+      color: #000;
+      font-size: 18px;
+    }
+    .navbar .navbar-brand {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+    }
+    .navbar-right {
+      float: right;
+      padding-right: 20px;
+    }
+    .table-striped > tbody > tr:nth-of-type(odd) {
+      background-color: #fff5ee; /* สลับสีพื้นหลังในตาราง */
+    }
+    .table-striped > tbody > tr:nth-of-type(even) {
+      background-color: #ffe4e1; /* สลับสีพื้นหลังในตาราง */
+    }
+    /* ปรับแต่งปุ่ม */
+    .btn-primary, .btn-success {
+      background-color: #ff7f50;
+      border-color: #ff7f50;
+    }
+    .btn-primary:hover, .btn-success:hover {
+      background-color: #ff4500;
+      border-color: #ff4500;
+    }
+    /* สไตล์ของ header */
+    h3 {
+      color: #333;
+      font-weight: bold;
+    }
+    .table th {
+      background-color: #ffdab9;
+      color: #333;
+      text-align: center;
+      font-weight: bold;
+    }
+    .table td {
+      text-align: center;
+    }
+    /* สไตล์สำหรับ footer */
+    .footer {
+      background-color: #ffdab9;
+      padding: 10px;
+      text-align: center;
+      margin-top: 20px;
+      color: #333;
+    }
+  </style>
+  <script>
+    function confirmDelete() {
+      return confirm("Are you sure you want to delete this product?");
+    }
+  </script>
+</head>
+<body>
+  <!-- Navigation bar -->
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <h4><a class="navbar-brand" href="#">PrintNgan</a></h4>
+      </div>
+      
+      <div class="navbar-right">
+        <div class="left-aligned-text">        
+          <span>สิทธิ์การใช้งานเฉพาะผู้ดูแลระบบเท่านั้น</span> <a href="/" class="btn btn-success">Logout</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Product Table -->
+  <div class="container mt-4">
+    <h3 class="text-center">แสดงรายการสินค้าทั้งหมด</h3>
+    <br>
+    <br>
+
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID_detail</th>
+            <th>type_page</th>
+            <th>num_page</th>
+            <th>price_sum</th>
+            <th>file_path</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (typeof items !== 'undefined' && items.length > 0) { %>
+          <% items.forEach(function(item, index) { %>
+          <tr>
+            <td><%= item.ID_detail %></td>
+            <td><%= item.type_page %></td>
+            <td><%= item.num_page %></td>
+            <td><%= item.price_sum %></td>
+            <td><%= item.file_path %></td>
+
+            <td><a href="/admins_auth/edit/<%= item.ID_detail %>" class="btn btn-warning">Edit</a></td>
+            <td><a href="/admins_auth/delete/<%= item.ID_detail %>" class="btn btn-danger" onclick="return confirmDelete()">Delete</a></td>
+          </tr>
+          <% }); %>
+          <% } else { %>
+          <tr>
+            <td colspan="6" class="text-center">No data available</td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>PrintNgan © 2024</p>
+  </div>
+</body>
+</html>

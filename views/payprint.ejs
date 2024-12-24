@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ชำระเงิน</title>
+</head>
+<body>
+    <h1>ชำระเงิน</h1>
+    <p>กรุณาชำระเงินโดยสแกนคิวอาร์โค้ดด้านล่าง</p>
+    <img src="path_to_your_qrcode_image" alt="QR Code">
+    <h3>จำนวนเงิน: 1234 บาท</h3>
+    <form action="/upload-slip" method="POST" enctype="multipart/form-data">
+        <label for="slip">อัพโหลดสลิปการโอนเงิน:</label>
+        <input type="file" id="slip" name="slip" accept="image/*" required>
+        <br><br>
+        <button type="submit">อัพโหลดสลิป</button>
+    </form>
+</body>
+</html>

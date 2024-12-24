@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrintNgan - Online Printing Service</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #fce3d2 0%, #fae4e2 100%);
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+        }
+        .bg-light{
+          background-color: #000000;
+        }
+        .py-5{
+          background-color: #ffceb6;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        .bg-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* ปรับให้วิดีโอครอบคลุมพื้นที่ */
+            transform: translate(-50%, -50%);
+            z-index: -1; /* วางวิดีโอไว้เบื้องหลัง */
+        }
+        .content{
+          position: relative;
+          z-index: 1;
+          color: #333;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 30px;
+            
+        }
+
+        .btn-primary {
+            background-color: #ff6347;
+            border-color: #ff6347;
+            font-size: 1.2rem;
+            padding: 10px 30px;
+            border-radius: 50px;
+            box-shadow: 0px 5px 15px rgba(255, 99, 71, 0.3);
+        }
+
+        /* Info Section */
+        .info_section {
+            padding: 80px 0;
+            background-color: #ffceb6;
+            text-align: center;
+            color: #333;
+        }
+
+        .info_section h4 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 50px;
+            color: #ff7f50;
+        }
+
+        .info_items .item {
+            background-color: #fdf3f0;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+
+        .info_items .item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .info_items .img-box {
+            font-size: 3rem;
+            color: #ff6347;
+            margin-bottom: 20px;
+        }
+
+        /* Footer Section */
+        .footer {
+            background-color: #333;
+            color: #fff;
+            padding: 30px 0;
+            text-align: center;
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+
+        /* Form Section */
+        .card {
+            border: none;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #ff7f50;
+        }
+
+        .form-select, .form-control {
+            border-radius: 8px;
+            border-color: #ddd;
+            padding: 10px;
+        }
+
+        /* Social Media Icons */
+        .social-box a {
+            color: #fff;
+            font-size: 1.5rem;
+            margin: 0 15px;
+        }
+
+        .social-box a:hover {
+            color: #ff6347;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">PrintNgan</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">หน้าแรก</a>
+                    </li>
+            
+                    <% if (session.loggedIn) { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                    <% } else { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">Register</a>
+                    </li>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!-- Hero Section -->
+<section class="hero">
+  <video autoplay loop muted playsinline class="bg-video">
+    <source src="https://cdn.pixabay.com/video/2023/07/21/172604-847659356_large.mp4" type="video/mp4">
+    <source src="https://cdn.pixabay.com/video/2023/07/21/172604-847659356_large.webm" type="video/webm">
+    Your browser does not support the video tag.
+</video>
+  <div class="content">
+    <h1>ปริ้นงานออนไลน์ครบวงจร</h1>
+    <p>ปริ้นรายงาน ถ่ายเอกสาร ปริ้นรูปเล่มเข้าสันปก ปริ้นสี-ขาวดำ ปริ้นรูปถ่าย</p>
+    <a href="#form-section" class="btn btn-primary btn-lg">สั่งปริ้นเอกสาร</a>
+  </div>
+</section>
+
+<!-- Info Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-lg-3">
+                <h3>คำนวนค่าบริการ</h3>
+                <p>คุณสามารถคำนวนเอกสารที่ต้องการได้ง่ายๆผ่านเว็บไซต์ของเรา</p>
+            </div>
+            <div class="col-lg-3">
+                <h3>สั่งปรินเอกสาร</h3>
+                <p>อัปโหลดเอกสารและทำการสั่งปริ้นได้จากแพลตฟอร์มของเรา</p>
+            </div>
+            <div class="col-lg-3">
+                <h3>ชำระเงิน</h3>
+                <p>ชำระเงินออนไลน์ทันทีหลังการสั่งปริ้น เพื่อให้การจัดการสะดวกยิ่งขึ้น</p>
+            </div>
+            <div class="col-lg-3">
+                <h3>จัดส่งเอกสาร</h3>
+                <p>เราจัดส่งเอกสารถึงคุณภายใน 1-3 วันหลังจากปริ้นเสร็จสิ้น</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Form Section -->
+<section id="form-section" class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">คำนวนยอดที่ต้องการ</h2>
+        <div class="row">
+            <!-- Form 1: ปรินเอกสาร ขาว-ดำ -->
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">ปริ้นเอกสาร ขาว-ดำ</h5>
+                        <form action="/order" method="post" enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label for="paperSizeBW" class="form-label">เลือกขนาดกระดาษ</label>
+                                <select class="form-select" id="paperSizeBW" name="paperSize" onchange="calculateTotal('BW')">
+                                    <option value="" selected>เลือกขนาด</option>
+                                    <option value="A4">A4</option>
+                                    <option value="A3">A3</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="quantityBW" class="form-label">ใส่จำนวนหน้า</label>
+                                <input type="number" class="form-control" id="quantityBW" name="quantity" oninput="calculateTotal('BW')" placeholder="จำนวนหน้า">
+                            </div>
+                            <div class="mb-3">
+                                <label for="totalBW" class="form-label">ยอดรวม</label>
+                                <input type="text" class="form-control" id="totalBW" name="total" placeholder="ยอดรวม" readonly>
+                            </div>
+                            <div class="mb-3">
+                              <label for="uploaded_file" class="form-label">เลือกไฟล์</label>
+                              <input type="file" class="form-control" id="uploaded_file" name="uploaded_file">
+                          </div>
+                            <input type="hidden" name="type" value="bw">
+                            <button type="submit" class="btn btn-primary w-100">สั่งปริ้น</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form 2: ปรินเอกสาร สี -->
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">ปริ้นเอกสาร สี</h5>
+                        <form action="/order" method="post" enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label for="paperSizeColor" class="form-label">เลือกขนาดกระดาษ</label>
+                                <select class="form-select" id="paperSizeColor" name="paperSize" onchange="calculateTotal('Color')">
+                                    <option value="" selected>เลือกขนาด</option>
+                                    <option value="A4">A4</option>
+                                    <option value="A3">A3</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="quantityColor" class="form-label">ใส่จำนวนหน้า</label>
+                                <input type="number" class="form-control" id="quantityColor" name="quantity" oninput="calculateTotal('Color')" placeholder="จำนวนหน้า">
+                            </div>
+                            <div class="mb-3">
+                                <label for="totalColor" class="form-label">ยอดรวม</label>
+                                <input type="text" class="form-control" id="totalColor" name="total" placeholder="ยอดรวม" readonly>
+                            </div>
+                            <div class="mb-3">
+                              <label for="uploaded_file" class="form-label">เลือกไฟล์</label>
+                              <input type="file" class="form-control" id="uploaded_file" name="uploaded_file">
+                          </div>
+                            <input type="hidden" name="type" value="color">
+                            <button type="submit" class="btn btn-primary w-100">สั่งปริ้น</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form 3: ปริน ภาพถ่าย -->
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">ปริ้น ภาพถ่าย</h5>
+                        <form action="/order" method="post" enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label for="paperSizePhoto" class="form-label">เลือกขนาดกระดาษ</label>
+                                <select class="form-select" id="paperSizePhoto" name="paperSize" onchange="calculateTotal('Photo')">
+                                    <option value="" selected>เลือกขนาด</option>
+                                    <option value="4x6">4x6</option>
+                                    <option value="5x7">5x7</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="quantityPhoto" class="form-label">ใส่จำนวนรูป</label>
+                                <input type="number" class="form-control" id="quantityPhoto" name="quantity" oninput="calculateTotal('Photo')" placeholder="จำนวนรูป">
+                            </div>
+                            <div class="mb-3">
+                                <label for="totalPhoto" class="form-label">ยอดรวม</label>
+                                <input type="text" class="form-control" id="totalPhoto" name="total" placeholder="ยอดรวม" readonly>
+                            </div>
+                            <div class="mb-3">
+                              <label for="uploaded_file" class="form-label">เลือกไฟล์</label>
+                              <input type="file" class="form-control" id="uploaded_file" name="uploaded_file">
+                          </div>
+                            <input type="hidden" name="type" value="photo">
+                            <button type="submit" class="btn btn-primary w-100">สั่งปริ้น</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Social Media and Contact Section -->
+<section class="info_section ">
+    <div class="container">
+      <h4>Contact Us</h4>
+      <div class="row">
+        <div class="col-lg-10 mx-auto">
+          <div class="info_items">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="item">
+                  <div class="img-box">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                  </div>
+                  <p>IG : Kanokchat .s</p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="item">
+                  <div class="img-box">
+                    <i class="fa fa-phone" aria-hidden="true"></i>
+                  </div>
+                  <p>+66 0823211641</p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="item">
+                  <div class="img-box">
+                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                  </div>
+                  <p>Kanokchat@gmail.com</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="social-box">
+      <h4>Follow Us</h4>
+      <div class="box">
+        <a href=""><i class="fa fa-facebook" aria-hidden="true"></i></a>
+        <a href=""><i class="fa fa-twitter" aria-hidden="true"></i></a>
+        <a href=""><i class="fa fa-youtube" aria-hidden="true"></i></a>
+        <a href=""><i class="fa fa-instagram" aria-hidden="true"></i></a>
+      </div>
+    </div>
+</section>
+
+<!-- JavaScript for Price Calculation -->
+<script>
+    const prices = {
+        BW: { A4: 2, A3: 4 }, // Black and White prices
+        Color: { A4: 5, A3: 8 }, // Color prices
+        Photo: { "4x6": 10, "5x7": 15 } // Photo prices
+    };
+
+    function calculateTotal(type) {
+        const paperSize = document.getElementById('paperSize' + type).value;
+        const quantity = document.getElementById('quantity' + type).value;
+        const totalField = document.getElementById('total' + type);
+
+        if (paperSize && quantity) {
+            const pricePerUnit = prices[type][paperSize];
+            const total = pricePerUnit * quantity;
+            totalField.value = total; // Display total in Thai Baht
+        } else {
+            totalField.value = '';
+        }
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container">
+    <h2>แก้ไขข้อมูล</h2>
+    <form action="/admins_auth/edit/<%= item.ID_detail %>" method="POST">
+      <div class="form-group">
+          <label for="num_page">Number of Pages:</label>
+          <input type="text" class="form-control" id="num_page" name="num_page" value="<%= item.num_page %>">
+      </div>
+      <div class="form-group">
+          <label for="price_sum">Price Sum:</label>
+          <input type="text" class="form-control" id="price_sum" name="price_sum" value="<%= item.price_sum %>">
+      </div>
+      <div class="form-group">
+          <label for="file_path">File Path:</label>
+          <input type="text" class="form-control" id="file_path" name="file_path" value="<%= item.file_path %>">
+      </div>
+      <button type="submit" class="btn btn-primary">Update</button>
+  </form>
+  
+  </div>
+</body>
+</html>
